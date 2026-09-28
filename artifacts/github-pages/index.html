@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Victors' Book Services</title>
+  <meta name="description" content="You write the story. We make it ready for readers. Editing, writing, design, formatting, and KDP support from one studio." />
+  <meta name="theme-color" content="#0c0b0a" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0b0a;
+      --elev: #141210;
+      --fg: #f3eee4;
+      --muted: #a39b8c;
+      --subtle: #7a7368;
+      --accent: #e8e0d0;
+      --accent-fg: #0c0b0a;
+      --border: rgba(243, 238, 228, 0.12);
+      --display: "Fraunces", ui-serif, Georgia, serif;
+      --sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+      color-scheme: dark;
+    }
+    html[data-mode="childrens"] {
+      --bg: #f4eadc;
+      --elev: #fbf6ee;
+      --fg: #2a2218;
+      --muted: #6b5e50;
+      --subtle: #8a7b6b;
+      --accent: #7c4a32;
+      --accent-fg: #fbf6ee;
+      --border: rgba(42, 34, 24, 0.12);
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; border-color: var(--border); }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--sans);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; text-wrap: balance; }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    button, [role="button"] { cursor: pointer; }
+    .wrap { max-width: 72rem; margin: 0 auto; padding: 0 1.25rem; }
+    header.nav {
+      position: sticky; top: 0; z-index: 40;
+      background: color-mix(in oklab, var(--bg) 90%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 4rem; }
+    .brand { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; min-width: 0; }
+    .brand strong { display: block; font-family: var(--display); font-size: 0.92rem; }
+    .brand small { display: none; color: var(--muted); font-size: 0.75rem; }
+    @media (min-width: 640px) { .brand small { display: block; } }
+    .links { display: none; gap: 1.35rem; }
+    @media (min-width: 960px) { .links { display: flex; } }
+    .links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+    .links a:hover { color: var(--fg); }
+    .nav-right { display: flex; align-items: center; gap: 0.5rem; }
+    .mode {
+      display: flex; padding: 2px; border-radius: 6px;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+    .mode button {
+      height: 2.25rem; padding: 0 0.75rem; border: 0; border-radius: 4px;
+      background: transparent; color: var(--muted); font: 500 0.75rem/1 var(--sans);
+    }
+    .mode button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 2.75rem; padding: 0 1.1rem; border-radius: 6px; text-decoration: none;
+      font-weight: 500; font-size: 0.9rem; border: 0; background: var(--accent); color: var(--accent-fg);
+    }
+    .btn.ghost { background: transparent; color: var(--fg); box-shadow: 0 0 0 1px var(--border); }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+    .hero { display: grid; gap: 2.5rem; padding: 3.5rem 0 4rem; }
+    @media (min-width: 900px) {
+      .hero { grid-template-columns: 1.15fr 0.85fr; align-items: end; }
+    }
+    .kicker { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); margin: 1rem 0 0; }
+    .hero h1 em { display: block; margin-top: 0.35rem; color: var(--muted); font-style: italic; }
+    .lede { max-width: 36rem; color: var(--muted); font-size: 1.05rem; }
+    .hero-panel {
+      background: var(--elev); border-radius: 12px; padding: 1.5rem 1.4rem;
+      box-shadow: 0 0 0 1px var(--border); min-height: 14rem;
+    }
+    .hero-panel p { margin: 0.4rem 0 0; color: var(--muted); font-size: 0.92rem; }
+    .hero-panel .mark { font-family: var(--display); font-size: 1.6rem; }
+    section.band { border-top: 1px solid var(--border); padding: 4rem 0; }
+    .stages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin: 2rem 0 1.5rem; }
+    @media (min-width: 800px) { .stages { grid-template-columns: repeat(6, 1fr); } }
+    .stages button {
+      min-height: 5.5rem; text-align: left; padding: 0.8rem;
+      border: 0; border-radius: 10px; background: var(--elev); color: var(--fg);
+      box-shadow: 0 0 0 1px var(--border); font: inherit;
+    }
+    .stages button small { display: block; font-family: var(--display); color: var(--subtle); }
+    .stages button span { display: block; font-family: var(--display); font-size: 1.15rem; margin-top: 0.2rem; }
+    .stages button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+    .stages button[aria-pressed="true"] small { color: color-mix(in oklab, var(--bg) 70%, transparent); }
+    .panel { background: var(--elev); border-radius: 12px; padding: 1.5rem; box-shadow: 0 0 0 1px var(--border); }
+    .pkg { display: grid; gap: 0.75rem; padding: 1.4rem 0; border-top: 1px solid var(--border); }
+    @media (min-width: 800px) {
+      .pkg { grid-template-columns: 3rem 1fr 1.4fr auto; align-items: baseline; gap: 1.25rem; }
+    }
+    .pkg .n { font-family: var(--display); color: var(--subtle); }
+    .pkg h3 { margin: 0; font-size: 1.45rem; }
+    .pkg ul { margin: 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.92rem; }
+    .families { display: grid; gap: 1rem; }
+    @media (min-width: 800px) { .families { grid-template-columns: repeat(2, 1fr); } }
+    .families article { background: var(--elev); border-radius: 12px; padding: 1.25rem 1.3rem; box-shadow: 0 0 0 1px var(--border); }
+    .families h3 { margin: 0.2rem 0 0.5rem; }
+    .families ul { margin: 0; padding-left: 1.1rem; color: var(--muted); }
+    .steps li { display: grid; gap: 0.4rem; padding: 1.4rem 0; border-top: 1px solid var(--border); list-style: none; }
+    .steps { margin: 0; padding: 0; }
+    @media (min-width: 800px) {
+      .steps li { grid-template-columns: 3rem 10rem 1fr; align-items: baseline; }
+    }
+    .faq dt { font-family: var(--display); font-size: 1.25rem; margin-top: 1.6rem; }
+    .faq dd { margin: 0.5rem 0 0; color: var(--muted); }
+    form { display: grid; gap: 0.9rem; max-width: 40rem; }
+    label { display: grid; gap: 0.35rem; font-size: 0.9rem; font-weight: 500; }
+    input, select, textarea {
+      height: 2.75rem; border: 0; border-radius: 6px; padding: 0 0.75rem;
+      background: var(--elev); color: var(--fg); font: inherit;
+      box-shadow: 0 0 0 1px var(--border);
+    }
+    textarea { height: 7rem; padding: 0.75rem; }
+    footer { border-top: 1px solid var(--border); padding: 3rem 0 2rem; color: var(--muted); font-size: 0.92rem; }
+    footer .grid { display: grid; gap: 2rem; }
+    @media (min-width: 800px) { footer .grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+    footer a { color: var(--fg); }
+    .menu-btn { display: inline-flex; height: 2.75rem; width: 2.75rem; align-items: center; justify-content: center; border: 0; background: transparent; color: var(--fg); font-size: 1.2rem; }
+    @media (min-width: 960px) { .menu-btn { display: none; } }
+    #mobile { display: none; border-top: 1px solid var(--border); padding: 0.75rem 0 1rem; }
+    #mobile.open { display: block; }
+    #mobile a { display: flex; min-height: 2.75rem; align-items: center; text-decoration: none; }
+    .note { color: var(--subtle); font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+  <a href="#main" style="position:absolute;left:-999px">Skip to content</a>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M16 6.5c-2.4 1.5-5.4 2.3-8.6 2.3v15c3.2 0 6.2-.8 8.6-2.3 2.4 1.5 5.4 2.3 8.6 2.3v-15c-3.2 0-6.2-.8-8.6-2.3Z" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M16 6.5v15" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>
+          <strong>Victors' Book Services</strong>
+          <small>Manuscript to published book</small>
+        </span>
+      </a>
+      <nav class="links" aria-label="Primary">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#work">Work</a>
+        <a href="#studio">Studio</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-right">
+        <div class="mode" role="group" aria-label="Studio pathway">
+          <button type="button" id="mode-literary" aria-pressed="true">Literary</button>
+          <button type="button" id="mode-childrens" aria-pressed="false">Children's</button>
+        </div>
+        <a class="btn" href="#inquire" style="display:none" id="nav-inquire">Inquire</a>
+        <button class="menu-btn" type="button" id="menu" aria-expanded="false" aria-controls="mobile" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+    <div class="wrap" id="mobile">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#work">Work</a>
+      <a href="#studio">Studio</a>
+      <a href="#faq">FAQ</a>
+      <a href="#childrens">Children's pathway</a>
+      <a href="#inquire">Inquire</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="wrap hero" id="top">
+      <div>
+        <p class="kicker" id="hero-kicker">Fiction · nonfiction · children's</p>
+        <h1>You write the story.<em>We make it ready for readers.</em></h1>
+        <p class="lede">Your book is in capable hands — clarity, polish, and a professional finish, so you can publish with confidence. A small roster. More than four years of KDP production. One brief from first draft to the store page.</p>
+        <div class="btn-row">
+          <a class="btn" href="#inquire">Request a quote</a>
+          <a class="btn ghost" href="#inquire">Free 1,000-word sample</a>
+        </div>
+        <p class="note" style="margin-top:1rem">Replies within 1–2 hours. No public rate card — we quote the book in front of us.</p>
+      </div>
+      <aside class="hero-panel">
+        <p class="kicker">Five families · one pipeline</p>
+        <p class="mark">Manuscript · Writing · Formatting · Design · Publishing</p>
+        <p>Enter where you are. New authors walk the path. Returning authors skip to the room that is stuck.</p>
+      </aside>
+    </section>
+
+    <section class="band" id="journey">
+      <div class="wrap">
+        <p class="kicker">The author journey</p>
+        <h2>Six rooms. One studio. You enter where you are.</h2>
+        <p class="lede">Related services light with the stage.</p>
+        <div class="stages" id="stages">
+          <button type="button" data-stage="0" aria-pressed="true"><small>01</small><span>Draft</span></button>
+          <button type="button" data-stage="1" aria-pressed="false"><small>02</small><span>Shape</span></button>
+          <button type="button" data-stage="2" aria-pressed="false"><small>03</small><span>Polish</span></button>
+          <button type="button" data-stage="3" aria-pressed="false"><small>04</small><span>Dress</span></button>
+          <button type="button" data-stage="4" aria-pressed="false"><small>05</small><span>Bind</span></button>
+          <button type="button" data-stage="5" aria-pressed="false"><small>06</small><span>Launch</span></button>
+        </div>
+        <div class="panel" id="stage-copy"></div>
+      </div>
+    </section>
+
+    <section class="band" id="packages">
+      <div class="wrap">
+        <p class="kicker">Named pathways</p>
+        <h2>Packages, not a menu of fifty ticks.</h2>
+        <div id="packages-list"></div>
+      </div>
+    </section>
+
+    <section class="band" id="services">
+      <div class="wrap">
+        <p class="kicker">The constellation</p>
+        <h2>Five families of work. They are a pipeline.</h2>
+        <p class="lede" style="margin-bottom:1.75rem">A click on the live studio site lights connected work. Here is the map, in full.</p>
+        <div class="families">
+          <article>
+            <p class="kicker">Read & revise</p>
+            <h3>Manuscript</h3>
+            <ul>
+              <li>Alpha reading</li>
+              <li>Beta reading</li>
+              <li>Book editing</li>
+              <li>Developmental editing</li>
+              <li>Structural editing</li>
+              <li>Character, pacing & story feedback</li>
+              <li>Line editing</li>
+              <li>Copy editing</li>
+              <li>Grammar, clarity & flow editing</li>
+              <li>Proofreading</li>
+              <li>Manuscript review & feedback</li>
+            </ul>
+          </article>
+          <article>
+            <p class="kicker">Draft & voice</p>
+            <h3>Writing</h3>
+            <ul>
+              <li>Ghostwriting</li>
+              <li>Ghost-editing</li>
+              <li>Fiction writing</li>
+              <li>Short stories & novels</li>
+              <li>Ebooks</li>
+              <li>Book content writing</li>
+              <li>Rewriting & content improvement</li>
+            </ul>
+          </article>
+          <article>
+            <p class="kicker">Interior & files</p>
+            <h3>Formatting</h3>
+            <ul>
+              <li>Ebook formatting</li>
+              <li>KDP ebook formatting</li>
+              <li>KDP print formatting</li>
+              <li>Paperback formatting</li>
+              <li>Hardcover formatting</li>
+              <li>Interior book design</li>
+              <li>Typesetting & layout</li>
+              <li>Clickable table of contents</li>
+              <li>Print-ready & publishing-ready files</li>
+            </ul>
+          </article>
+          <article>
+            <p class="kicker">Jacket & image</p>
+            <h3>Design</h3>
+            <ul>
+              <li>Book cover design</li>
+              <li>Cover redesign</li>
+              <li>Front, back & spine design</li>
+              <li>Fiction & nonfiction covers</li>
+              <li>Children's book design</li>
+              <li>Ebook cover design</li>
+              <li>Canva book design</li>
+            </ul>
+          </article>
+          <article>
+            <p class="kicker">Store & after</p>
+            <h3>Publishing</h3>
+            <ul>
+              <li>Amazon KDP publishing support</li>
+              <li>Manuscript-to-publishing preparation</li>
+              <li>Book upload & formatting assistance</li>
+              <li>Book metadata & keywords</li>
+              <li>Post-publication book marketing</li>
+              <li>Author platform & website support</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="process">
+      <div class="wrap">
+        <p class="kicker">Process</p>
+        <h2>A brief, a sample, then the files in your hands.</h2>
+        <ol class="steps">
+          <li><span class="n">01</span><strong>Brief</strong><span>You send where the manuscript is. We reply within 1–2 hours.</span></li>
+          <li><span class="n">02</span><strong>Sample or scope</strong><span>A free first 1,000 words, or a written plan if you already know the work.</span></li>
+          <li><span class="n">03</span><strong>Agreement</strong><span>Two rounds of revision included. You remain the author and the publisher of record.</span></li>
+          <li><span class="n">04</span><strong>The work</strong><span>Word or Google Docs. Interiors in Vellum, Atticus, or InDesign. Covers in Photoshop, InDesign, or Canva.</span></li>
+          <li><span class="n">05</span><strong>Handoff</strong><span>Edited .docx, print PDF, KPF, EPUB, cover PNG or PDF — whichever you asked for.</span></li>
+          <li><span class="n">06</span><strong>Optional launch</strong><span>KDP upload, metadata, and the quiet work after publication.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="band" id="work">
+      <div class="wrap">
+        <p class="kicker">Work</p>
+        <h2>Covers we can show. Titles we cannot.</h2>
+        <p class="lede">Client books leave this page unnamed. The directions below are studio samples — the kind of jacket we make.</p>
+        <div class="families" style="margin-top:1.75rem">
+          <article>
+            <p class="kicker">Literary fiction · cover direction</p>
+            <h3>Where the River Keeps Its Name</h3>
+            <p>Studio sample. Not a client title.</p>
+          </article>
+          <article>
+            <p class="kicker">Picture book · cover direction</p>
+            <h3>The Lantern Under the Baobab</h3>
+            <p>Studio sample. Not a client title.</p>
+          </article>
+        </div>
+        <h3 style="margin-top:2.5rem">From the roster's desk</h3>
+        <p class="note">Names shortened. Book titles withheld under confidence.</p>
+        <div class="families" style="margin-top:1rem">
+          <article>
+            <p>“I sent a draft I was half-ashamed of. The structural letter named the book I thought I had written and the one on the page.”</p>
+            <p class="note">N. · Independent novelist · Fiction</p>
+          </article>
+          <article>
+            <p>“They treated the interior like the cover's quieter twin. Print files uploaded on the first try.”</p>
+            <p class="note">K. · Nonfiction author</p>
+          </article>
+          <article>
+            <p>“Our picture book's pacing finally matched the page turns. The notes were kind and exact.”</p>
+            <p class="note">M. · Children's author-illustrator</p>
+          </article>
+          <article>
+            <p>“I had been stuck at almost-done for a year. The line edit and the KDP handoff were the same conversation.”</p>
+            <p class="note">S. · Genre novelist</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="studio">
+      <div class="wrap">
+        <p class="kicker">The studio</p>
+        <h2>A small roster. A full pipeline.</h2>
+        <p class="lede">Victors' Book Services is not a marketplace of strangers. Editors, designers, and formatters under one brief — more than four years walking books through KDP and print.</p>
+        <div class="families" style="margin-top:1.75rem">
+          <article>
+            <p>We work in English, Yoruba, French, and Spanish. You remain the author. You remain the publisher of record. Manuscripts are read under confidence. If you need a written NDA before pages leave your machine, say so in the brief.</p>
+          </article>
+          <article>
+            <p><strong>Where</strong> Remote, West Africa Time</p>
+            <p><strong>Reply</strong> within 1–2 hours</p>
+            <p><strong>Revisions</strong> Two rounds included</p>
+            <p><strong>Write</strong> <a href="mailto:victorsbookservices@gmail.com">victorsbookservices@gmail.com</a></p>
+            <p><strong>Telegram</strong> <a href="https://t.me/VictorsBookServices">@VictorsEdits</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="childrens">
+      <div class="wrap">
+        <p class="kicker">Children's pathway</p>
+        <h2>Picture books, chapter books, middle grade — still a press, not a playroom.</h2>
+        <p class="lede">Page-turns are structure. Type size is a kindness. Use the Children's toggle in the header to warm the room. The packages stay the same; the notes change.</p>
+      </div>
+    </section>
+
+    <section class="band" id="faq">
+      <div class="wrap">
+        <p class="kicker">FAQ</p>
+        <h2>The questions that arrive before the brief.</h2>
+        <dl class="faq">
+          <dt>How does the free 1,000-word sample work?</dt>
+          <dd>Send the brief and tell us you want a sample. We reply within 1–2 hours with where to send the excerpt.</dd>
+          <dt>Why are there no prices on the site?</dt>
+          <dd>Length, genre, language, draft stage, and deadline change the work. We quote after the brief, usually the same day.</dd>
+          <dt>Do I stay the author?</dt>
+          <dd>Yes. Ghostwritten books go out under your name. You remain the publisher of record on KDP.</dd>
+          <dt>Which languages do you work in?</dt>
+          <dd>English, Yoruba, French, and Spanish.</dd>
+          <dt>Is my manuscript confidential?</dt>
+          <dd>Yes. We do not list client titles here.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <section class="band" id="inquire">
+      <div class="wrap">
+        <p class="kicker">Inquire</p>
+        <h2>Tell us where the manuscript is.</h2>
+        <p class="lede">No public prices. We quote the book in front of us. We reply within 1–2 hours from West Africa Time.</p>
+        <form id="brief" style="margin-top:1.75rem">
+          <label>Name <input name="name" required autocomplete="name" /></label>
+          <label>Email <input name="email" type="email" required autocomplete="email" /></label>
+          <label>I need
+            <select name="intent">
+              <option value="quote">A quote</option>
+              <option value="sample">Free 1,000-word sample</option>
+              <option value="both">Both</option>
+            </select>
+          </label>
+          <label>Package
+            <select name="package">
+              <option value="">À la carte</option>
+              <option>Story Foundation</option>
+              <option>Prose Polish</option>
+              <option>Ghosted & Guided</option>
+              <option>The Bound Page</option>
+              <option>Jacket & Cover</option>
+              <option>Imprint Launch</option>
+              <option>Full Imprint</option>
+            </select>
+          </label>
+          <label>Word count <input name="words" placeholder="e.g. 72,000 or 24 spreads" required /></label>
+          <label>Genre / category <input name="genre" required /></label>
+          <label>Audience
+            <select name="audience" required>
+              <option value="">Select</option>
+              <option>Adult fiction</option>
+              <option>Adult nonfiction</option>
+              <option>Children's / middle grade</option>
+              <option>More than one</option>
+            </select>
+          </label>
+          <label>Language of the manuscript
+            <select name="language">
+              <option>English</option>
+              <option>Yoruba</option>
+              <option>French</option>
+              <option>Spanish</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label>Draft stage
+            <select name="stage" required>
+              <option value="">Select</option>
+              <option>Idea / outline only</option>
+              <option>Messy first draft</option>
+              <option>Revised manuscript</option>
+              <option>Ready for line or copy edit</option>
+              <option>Text locked, needs design or files</option>
+              <option>Formatted files, needs upload or proof</option>
+            </select>
+          </label>
+          <label>Anything we should know
+            <textarea name="note" placeholder="Deadline, series, a dummy already made…"></textarea>
+          </label>
+          <p class="note">Do not paste the 1,000 words here. Attach the excerpt in your email after this brief opens.</p>
+          <button class="btn" type="submit">Send brief</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap grid">
+      <div>
+        <strong style="color:var(--fg);font-family:var(--display);font-size:1.15rem">Victors' Book Services</strong>
+        <p>You Write the Story. We Make It Ready for Readers.</p>
+        <p>Remote, West Africa Time. Replies within 1–2 hours.</p>
+      </div>
+      <div>
+        <p class="kicker">Visit</p>
+        <p><a href="#services">Services</a><br /><a href="#process">Process</a><br /><a href="#work">Work</a><br /><a href="#inquire">Inquire</a></p>
+      </div>
+      <div>
+        <p class="kicker">Write</p>
+        <p><a href="mailto:victorsbookservices@gmail.com">victorsbookservices@gmail.com</a><br />
+        <a href="https://t.me/VictorsBookServices">Telegram @VictorsEdits</a></p>
+        <p>English · Yoruba · French · Spanish</p>
+      </div>
+    </div>
+    <div class="wrap" style="margin-top:2rem;border-top:1px solid var(--border);padding-top:1rem" class="note">
+      <p class="note">Client titles stay off this site. Two revision rounds included. You remain the author.</p>
+    </div>
+  </footer>
+
+  <script>
+    const stages = [
+      { t: "Draft", b: "Pages exist — or they need to. Alpha reading, ghostwriting, and first-pass story notes." },
+      { t: "Shape", b: "The book finds its architecture. Developmental and structural editing, character, pacing, argument." },
+      { t: "Polish", b: "Sentences, grammar, continuity, and the last clean pass. Line, copy, flow, proof." },
+      { t: "Dress", b: "The jacket and the interior as a pair. Cover, spine, children's art direction, typesetting." },
+      { t: "Bind", b: "Print-ready and publishing-ready files. Ebook, paperback, hardcover, clickable contents." },
+      { t: "Launch", b: "KDP, metadata, upload, and the work after publication. The store page is part of the book." }
+    ];
+    const pkgs = [
+      ["01", "Story Foundation", "For drafts that are not yet a book.", ["Alpha or beta reading", "Developmental or structural editing", "Character, pacing, and story feedback"]],
+      ["02", "Prose Polish", "For manuscripts whose story is in place.", ["Line editing", "Copy editing", "Grammar, clarity, and flow", "Proofreading after layout"]],
+      ["03", "Ghosted & Guided", "For authors who need the pages written or rebuilt.", ["Ghostwriting or ghost-editing", "Fiction, short stories, novels, ebooks", "Rewriting and content improvement"]],
+      ["04", "The Bound Page", "For authors who need a real interior.", ["Ebook and KDP ebook formatting", "Paperback and hardcover interiors", "Typesetting, clickable TOC, print-ready files"]],
+      ["05", "Jacket & Cover", "For authors who need the face of the book.", ["Cover design or redesign", "Front, back, and spine", "Ebook, print, and children's treatments"]],
+      ["06", "Imprint Launch", "For authors ready to go live.", ["KDP publishing support", "Upload assistance", "Metadata, keywords, post-publication support"]],
+      ["07", "Full Imprint", "For authors who want one studio from draft to store.", ["The whole pipeline, quoted as one engagement", "Editing, writing as needed, design, formatting, KDP"]]
+    ];
+
+    const stageCopy = document.getElementById("stage-copy");
+    function showStage(i) {
+      document.querySelectorAll("#stages button").forEach((btn, n) => btn.setAttribute("aria-pressed", n === i ? "true" : "false"));
+      stageCopy.innerHTML = "<p>" + stages[i].b + "</p>";
+    }
+    showStage(0);
+    document.getElementById("stages").addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      showStage(Number(btn.dataset.stage));
+    });
+
+    document.getElementById("packages-list").innerHTML = pkgs.map(([n, name, forWho, items]) =>
+      '<div class="pkg"><div class="n">' + n + '</div><div><h3>' + name + '</h3><p class="note">' + forWho + '</p></div><ul>' +
+      items.map((x) => "<li>" + x + "</li>").join("") + '</ul><a class="btn ghost" href="#inquire">Inquire</a></div>'
+    ).join("");
+
+    function setMode(mode) {
+      document.documentElement.dataset.mode = mode;
+      document.getElementById("mode-literary").setAttribute("aria-pressed", mode === "literary" ? "true" : "false");
+      document.getElementById("mode-childrens").setAttribute("aria-pressed", mode === "childrens" ? "true" : "false");
+      document.getElementById("hero-kicker").textContent = mode === "childrens"
+        ? "Picture books · chapter books · middle grade"
+        : "Fiction · nonfiction · children's";
+    }
+    document.getElementById("mode-literary").onclick = () => setMode("literary");
+    document.getElementById("mode-childrens").onclick = () => setMode("childrens");
+
+    const menu = document.getElementById("menu");
+    const mobile = document.getElementById("mobile");
+    menu.onclick = () => {
+      const open = mobile.classList.toggle("open");
+      menu.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    mobile.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => mobile.classList.remove("open")));
+
+    if (window.matchMedia("(min-width: 640px)").matches) {
+      document.getElementById("nav-inquire").style.display = "inline-flex";
+    }
+
+    document.getElementById("brief").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const f = e.target;
+      const body = [
+        "Intent: " + f.intent.value,
+        "Name: " + f.name.value,
+        "Email: " + f.email.value,
+        "Package: " + (f.package.value || "À la carte"),
+        "Word count: " + f.words.value,
+        "Genre: " + f.genre.value,
+        "Audience: " + f.audience.value,
+        "Language: " + f.language.value,
+        "Draft stage: " + f.stage.value,
+        "",
+        f.note.value || "(no additional note)"
+      ].join("\n");
+      const subject = f.intent.value === "sample" ? "Sample request — " + f.name.value : "Manuscript brief — " + f.name.value;
+      window.location.href = "mailto:victorsbookservices@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    });
+  </script>
+</body>
+</html>
