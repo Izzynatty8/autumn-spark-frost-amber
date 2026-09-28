@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Victors' Book Services",
+      "hasCanvas": false,
+      "bodyTextLen": 3337,
+      "bodyTextHash": "fe5c1e84af3639a35dcfd4498c1e6f5b9e4644dddb5668739d8b23d63109da29",
+      "bodyTextPrefix": "Skip to content Victors' Book Services Manuscript to published b",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Victors' Book Services",
+      "hasCanvas": false,
+      "bodyTextLen": 3174,
+      "bodyTextHash": "e00661a10e9836bedc4ac171f25119a9510fe64c1c211d25ea60fcd60307d475",
+      "bodyTextPrefix": "Skip to content Victors' Book Services FICTION · NONFICTION · CH",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

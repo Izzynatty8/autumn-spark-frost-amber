@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0c0b0a;
+  --bg-elevated: #141210;
+  --bg-subtle: #1c1916;
+  --fg: #f3eee4;
+  --fg-muted: #a39b8c;
+  --fg-subtle: #7a7368;
+  --accent: #e8e0d0;
+  --accent-fg: #0c0b0a;
+  --border: color-mix(in oklab, var(--fg) 12%, transparent);
+  --border-strong: color-mix(in oklab, var(--fg) 22%, transparent);
+  --ring: color-mix(in oklab, var(--accent) 55%, transparent);
+  --shadow-border: 0 0 0 1px color-mix(in oklab, var(--fg) 10%, transparent);
+  --shadow-border-hover: 0 0 0 1px color-mix(in oklab, var(--fg) 18%, transparent);
+  --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --leading-tight: 1.12;
+  --leading-snug: 1.28;
+  --leading-normal: 1.55;
+  --tracking-display: -0.03em;
+  --motion-micro: 80ms;
+  --motion-quick: 150ms;
+  --motion-fast: 250ms;
+  --motion-slow: 400ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --cover-ivory: #f3eee4;
+  --cover-ink: #1c1610;
+  color-scheme: dark;
+}
+
+html[data-mode="childrens"] {
+  --bg: #f4eadc;
+  --bg-elevated: #fbf6ee;
+  --bg-subtle: #ece1d0;
+  --fg: #2a2218;
+  --fg-muted: #6b5e50;
+  --fg-subtle: #8a7b6b;
+  --accent: #7c4a32;
+  --accent-fg: #fbf6ee;
+  --border: color-mix(in oklab, var(--fg) 12%, transparent);
+  --border-strong: color-mix(in oklab, var(--fg) 22%, transparent);
+  --ring: color-mix(in oklab, var(--accent) 45%, transparent);
+  --shadow-border:
+    0 0 0 1px rgba(42, 34, 24, 0.08), 0 1px 2px -1px rgba(42, 34, 24, 0.06),
+    0 2px 4px 0 rgba(42, 34, 24, 0.04);
+  --shadow-border-hover:
+    0 0 0 1px rgba(42, 34, 24, 0.12), 0 1px 2px -1px rgba(42, 34, 24, 0.08),
+    0 2px 4px 0 rgba(42, 34, 24, 0.06);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+  --color-cover-ivory: var(--cover-ivory);
+  --color-cover-ink: var(--cover-ink);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    line-height: var(--leading-normal);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-tight);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  img {
+    outline: 1px solid color-mix(in oklab, var(--fg) 10%, transparent);
+    outline-offset: -1px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.stagger-in > * {
+  animation: rise var(--motion-slow) var(--ease-smooth-out) both;
+}
+
+.stagger-in > *:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger-in > *:nth-child(2) {
+  animation-delay: 70ms;
+}
+.stagger-in > *:nth-child(3) {
+  animation-delay: 140ms;
+}
+.stagger-in > *:nth-child(4) {
+  animation-delay: 210ms;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

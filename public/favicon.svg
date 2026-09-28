@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Victors' Book Services">
+  <rect width="16" height="16" rx="3" fill="#0c0b0a"/>
+  <path fill="#f3eee4" d="M1 5 7 2v12L1 11Z"/>
+  <path fill="#e8e0d0" d="M9 2 15 5v6L9 14Z"/>
+  <rect x="7" y="2" width="2" height="12" fill="#a39b8c"/>
+</svg>
